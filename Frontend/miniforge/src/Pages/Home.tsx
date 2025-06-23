@@ -4,6 +4,7 @@ import figures from '../assets/figures.png'; // Adjust the path as necessary
 import printer from '../assets/printer.png'; // Adjust the path as necessary
 import order from '../assets/order.png';
 
+
 const Home: React.FC = () => {
     return (
         <main className="min-h-screen flex flex-col bg-[#F7E9E9]">

@@ -7,8 +7,10 @@ import NavBar from './Components/NavBar';
 import ProductDetails from './Pages/ProductDetails';
 import AboutUs from './Pages/AboutUs';
 import Contact from './Pages/Contact';
-
-
+import Login from "./Pages/Login.tsx";
+import ProtectedRoute from './Components/ProtectedRoute.tsx';
+import Profile from './Pages/Profile.tsx';
+import Register from "./Pages/Register.tsx";
 
 function App() {
   return (
@@ -22,6 +24,16 @@ function App() {
         <Route path="/product/:id" element={<ProductDetails />} />
         <Route path="/about" element={<AboutUs />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/login" element={<Login />} />
+          <Route
+              path="/profile"
+              element={
+                  <ProtectedRoute>
+                      <Profile />
+                  </ProtectedRoute>
+              }
+          />
+        <Route path={'/register'} element={<Register />} />
       </Routes>
 
     </BrowserRouter>

@@ -1,32 +1,52 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import type { Product } from '../Types/Product';
 
-const sampleProducts: Product[] = [
-    { id: 1, name: 'Knight Figurine', price: 19.99, image: '/products/knight.png', category: 'Figures', description: 'A finely detailed knight ready for battle.' },
-    { id: 2, name: 'Battle Tank', price: 29.99, image: '/products/tank.png', category: 'Vehicles', description: 'Armored tank model for tabletop warfare.' },
-    { id: 3, name: 'Elf Archer', price: 24.99, image: '/products/elf-archer.png', category: 'Figures', description: 'Graceful elf archer with intricate bow design.' },
-    { id: 4, name: 'Wizard Tower', price: 34.99, image: '/products/tower.png', category: 'Structures', description: 'Mystical tower emitting arcane energy.' },
-    { id: 5, name: 'Cannon', price: 21.5, image: '/products/cannon.png', category: 'Vehicles', description: 'Heavy-duty cannon for siege scenarios.' },
-    { id: 6, name: 'Goblin Pack', price: 14.75, image: '/products/goblin-pack.png', category: 'Figures', description: 'Squad of mischievous goblins ready to swarm.' },
-];
+
 
 const ProductDetails: React.FC = () => {
     const { id } = useParams<{ id: string }>();
-    const product = sampleProducts.find(p => p.id === Number(id));
+    const [product, setProduct] = useState<Product | null>(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
 
-    if (!product) {
+    useEffect(() => {
+        if (!id) return;
+        const fetchProduct = async () => {
+            setLoading(true);
+            setError(null);
+            try {
+                const res = await fetch(`/api/products/${id}`);
+                if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                const data: Product = await res.json();
+                setProduct(data);
+            } catch (err: any) {
+                console.error(err);
+                setError(err.message || 'Failed to fetch product');
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchProduct();
+    }, [id]);
+
+    if (loading) {
+        return <div className="p-8 text-center">Loading product...</div>;
+    }
+
+    if (error || !product) {
         return (
-            <div className="container mx-auto px-6 py-10">
-                <p className="text-center text-[#561412]">Product not found.</p>
-                <div className="text-center mt-4">
-                    <Link to="/products" className="text-[#AB2724] hover:underline">← Back to Products</Link>
-                </div>
+            <div className="container mx-auto px-6 py-10 text-center">
+                <p className="text-red-600">{error || 'Product not found.'}</p>
+                <Link to="/products" className="text-[#AB2724] hover:underline mt-4 inline-block">
+                    ← Back to Products
+                </Link>
             </div>
         );
     }
 
     return (
+        <div className={'min-h-screen bg-[#F7E9E9]'}>
         <div className="container mx-auto px-6 py-10">
             <Link to="/products" className="text-[#AB2724] hover:underline mb-6 inline-block">
                 ← Back to Products
@@ -42,12 +62,13 @@ const ProductDetails: React.FC = () => {
                     <p className="text-[#AB2724] text-2xl font-semibold mb-6">
                         ${product.price.toFixed(2)}
                     </p>
-                    <p className="text-[#561412] mb-6">{product.description}</p>
+                    {product.description && <p className="text-[#561412] mb-6">{product.description}</p>}
                     <button className="bg-[#AB2724] text-white px-6 py-3 rounded hover:bg-[#781B19] transition">
                         Add to Cart
                     </button>
                 </div>
             </div>
+        </div>
         </div>
     );
 };
