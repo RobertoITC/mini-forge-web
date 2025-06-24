@@ -11,6 +11,7 @@ import Login from "./Pages/Login.tsx";
 import ProtectedRoute from './Components/ProtectedRoute.tsx';
 import Profile from './Pages/Profile.tsx';
 import Register from "./Pages/Register.tsx";
+import CartPage from "./Pages/Cart.tsx";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
         <Route path="/about" element={<AboutUs />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/cart" element={<CartPage />} />
           <Route
               path="/profile"
               element={

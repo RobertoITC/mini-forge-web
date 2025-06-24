@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { useAuth } from '../Contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import { supabase } from '../Lib/supabaseClient';
+
+
 
 const Login: React.FC = () => {
     const { signIn } = useAuth();
@@ -8,6 +11,12 @@ const Login: React.FC = () => {
     const [email, setEmail] = useState('');
     const [pw, setPw] = useState('');
     const [err, setErr] = useState<string | null>(null);
+
+    const loginWithGoogle = async () => {
+        await supabase.auth.signInWithOAuth({
+            provider: 'google',
+        });
+    };
 
     const handle = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -51,6 +60,14 @@ const Login: React.FC = () => {
                         </button>
                     </p>
                 </div>
+                <button
+                    type="button"
+                    onClick={loginWithGoogle}
+                    className="w-full border border-gray-300 py-2 rounded flex items-center justify-center gap-2 hover:bg-gray-100 transition"
+                >
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/768px-Google_%22G%22_logo.svg.png" alt="G" className="w-5 h-5" />
+                    Continue with Google
+                </button>
             </form>
 
 
