@@ -12,6 +12,8 @@ import ProtectedRoute from './Components/ProtectedRoute.tsx';
 import Profile from './Pages/Profile.tsx';
 import Register from "./Pages/Register.tsx";
 import CartPage from "./Pages/Cart.tsx";
+import GameIdeas from "./Pages/GameIdeas.tsx";
+import CustomOrder from "./Pages/CustomOrder.tsx";
 
 function App() {
   return (
@@ -24,6 +26,14 @@ function App() {
         <Route path="/products" element={<Products/> }/>
         <Route path="/product/:id" element={<ProductDetails />} />
         <Route path="/about" element={<AboutUs />} />
+          <Route
+              path="/custom-order"
+              element={
+                  <ProtectedRoute>
+                      <CustomOrder />
+                  </ProtectedRoute>
+              }
+          />
           <Route path="/contact" element={<Contact />} />
           <Route path="/login" element={<Login />} />
           <Route path="/cart" element={<CartPage />} />
@@ -36,6 +46,7 @@ function App() {
               }
           />
         <Route path={'/register'} element={<Register />} />
+          <Route path={'/games'} element={<GameIdeas />} />
       </Routes>
 
     </BrowserRouter>

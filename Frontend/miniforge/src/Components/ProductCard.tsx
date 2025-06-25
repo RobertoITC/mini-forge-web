@@ -2,11 +2,14 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import type { Product } from '../Types/Product';
 import { useCart } from '../Contexts/CartContext';
+//aceternity ui tilt card
+
 
 const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
     const { addItem } = useCart(); // ✅ hook inside component body
 
     return (
+
         <Link to={`/product/${product.id}`} className="block">
             <div className="bg-white rounded-lg shadow p-4 transform transition duration-300 hover:scale-105 hover:shadow-lg">
                 <img

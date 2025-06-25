@@ -49,6 +49,9 @@ const NavBar: React.FC = () => {
           <div className="flex items-center space-x-6">
             <Link to="/" className="hover:text-[#781B19] transition">Home</Link>
             <Link to="/products" className="hover:text-[#781B19] transition">Products</Link>
+            <Link to="/games" className="hover:text-[#781B19] transition">Games</Link>
+            <Link to="/custom-order" className="hover:text-[#781B19] transition">Custom</Link>
+
             <Link to="/about" className="hover:text-[#781B19] transition">About</Link>
             <Link to="/contact" className="hover:text-[#781B19] transition">Contact</Link>
 

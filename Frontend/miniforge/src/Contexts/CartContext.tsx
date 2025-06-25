@@ -1,6 +1,8 @@
 // src/contexts/CartContext.tsx
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import type { CartItem } from '../Types/Cart';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 interface CartCtx {
     items: CartItem[];
@@ -33,6 +35,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
             }
             return [...prev, { product, quantity: 1 }];
         });
+        toast.success(`${product.name} added to cart`, { theme: 'colored' });
     };
 
     const removeItem = (id: number) =>
